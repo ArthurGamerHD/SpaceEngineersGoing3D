@@ -61,9 +61,7 @@ namespace IngameScript
                 int Y = (int)surface.TextureSize.Y;
                 viewport = new RectangleF(0, 0, X, Y);
                 Meshes = new List<ObjectMesh>
-                { Demo() };
-                Meshes.Last().Scale(30f);
-                Meshes.Last().Offset(WorldCamera.Position);
+                { DemoObject() };
                 Instructions = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
                 Zoom = 100;
                 float Fov = 70;
@@ -74,6 +72,8 @@ namespace IngameScript
 
                 //if (argument == "Up") TaskList.Add(Meshes.Last().Upscale());
                 if (argument == "Debug") Debug = !Debug;
+                if (argument == "Demo") Meshes[0] = DemoObject();
+                if (argument == "Load") TaskList.Add(ObjParse());
 
                 if (Clock % 10 == 0) NextFrame = true; Clock++;
                 DBText = $"Clock:{Clock}\nTasks:{TaskList.Count()} {(TaskList.Count() > 7 ? "\nWarning: CPU Overload,\nInput Lag & Frame Drop Expected" : "")}\n{Meshes.Last().Triangles.Count()}\nCamera:\n{WorldCamera.Position}\n/{WorldCamera.Orientation}";
@@ -207,7 +207,7 @@ namespace IngameScript
 
                 public Camera()
                 {
-                    Position = new Vector3(0, 0, -10);
+                    Position = new Vector3(0, 0, 10);
                     Perspective = Matrix.CreatePerspectiveFieldOfView(1.05f, 1, 1, 800);
                     SetMatrix();
                 }
@@ -301,7 +301,7 @@ namespace IngameScript
                     var norm = normal.Normalize();
                     normal.X /= norm; normal.Y /= norm; normal.Z /= norm;
 
-                    Normal = -(normal.X * (ProjectedVec[0].X - vCamera.X) + normal.Y * (ProjectedVec[0].Y - vCamera.Y) + normal.Z * (ProjectedVec[0].Z - vCamera.Z));
+                    Normal = (normal.X * (ProjectedVec[0].X - vCamera.X) + normal.Y * (ProjectedVec[0].Y - vCamera.Y) + normal.Z * (ProjectedVec[0].Z - vCamera.Z));
                 }
 
                 public void UpdateFaces()
@@ -357,16 +357,16 @@ namespace IngameScript
                         SpriteType.TEXTURE,
                         "RightTriangle",
                         T1,
-                        new Vector2(a, h) * 1.05f,
-                        FaceColor / (Distance * 10),
+                        new Vector2(a, h) * 1.02f,
+                        FaceColor / (Distance * 5),
                         rotation: angle
                         ));
                     Face.Add(new MySprite(
                         SpriteType.TEXTURE,
                         "RightTriangle",
                         T2,
-                        new Vector2(-b, h) * 1.05f,
-                        FaceColor / (Distance * 10),
+                        new Vector2(-b, h) * 1.02f,
+                        FaceColor / (Distance * 5),
                         rotation: angle
                         ));
                 }
@@ -408,10 +408,11 @@ namespace IngameScript
 
             }
             readonly List<ObjectMesh> Meshes;
-            public ObjectMesh Demo()
+
+            public ObjectMesh DemoObject()
             {
                 return new ObjectMesh(new List<Triangle>
-                {/*
+                {
             // SOUTH
             Triangle.New( -1.0f, -1.0f, -1.0f,    -1.0f, 1.0f, -1.0f,    1.0f, 1.0f, -1.0f ),
             Triangle.New( -1.0f, -1.0f, -1.0f,    1.0f, 1.0f, -1.0f,    1.0f, -1.0f, -1.0f ),
@@ -434,7 +435,7 @@ namespace IngameScript
 
             // BOTTOM
             Triangle.New( 1.0f, -1.0f, 1.0f,    -1.0f, -1.0f, 1.0f,    -1.0f, -1.0f, -1.0f ),
-            Triangle.New( 1.0f, -1.0f, 1.0f,    -1.0f, -1.0f, -1.0f,    1.0f, -1.0f, -1.0f )*/
+            Triangle.New( 1.0f, -1.0f, 1.0f,    -1.0f, -1.0f, -1.0f,    1.0f, -1.0f, -1.0f )
                 });
             }
 
@@ -516,6 +517,7 @@ namespace IngameScript
                 }
                 Object3D.Scale(50f);
                 Object3D.Offset(WorldCamera.Position);
+                TaskList.Add(Object3D.Offset(WorldCamera.Position));
                 Meshes[0] = Object3D;
                 yield return true;
             }
