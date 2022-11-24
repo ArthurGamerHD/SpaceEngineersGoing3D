@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32510.428
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SE Going3D V2", "Going3D V2\SE Going3D V2.csproj", "{F0D30EF7-1303-4A42-A660-AE001F32EBFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0D30EF7-1303-4A42-A660-AE001F32EBFD}.Debug|x64.ActiveCfg = Debug|x64
+		{F0D30EF7-1303-4A42-A660-AE001F32EBFD}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2956DEFC-D036-41B5-908D-39B6F74BA4E2}
+	EndGlobalSection
+EndGlobal
